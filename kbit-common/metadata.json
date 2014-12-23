@@ -1,0 +1,12 @@
+{
+  "name": "kbit-common",
+  "version": "0.1.0",
+  "author": "kbit",
+  "summary": "Default config for Designa servers",
+  "license": "Apache 2.0",
+  "source": "",
+  "project_page": null,
+  "issues_url": null,
+  "dependencies": []
+}
+

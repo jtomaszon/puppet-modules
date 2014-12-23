@@ -1,0 +1,39 @@
+[DEFAULT]
+ignoreip = $ipaddress
+bantime  = 600
+maxretry = 3
+backend = polling
+
+destemail = jtomaszon@gmail.com
+
+# ACTIONS
+banaction = iptables-multiport
+mta = sendmail
+protocol = tcp
+
+# The simplest action to take: ban only
+action_ = %(banaction)s[name=%(__name__)s, port="%(port)s", protocol="%(protocol)s]
+
+# ban & send an e-mail with whois report to the destemail.
+action_mw = %(banaction)s[name=%(__name__)s, port="%(port)s", protocol="%(protocol)s]
+              %(mta)s-whois[name=%(__name__)s, dest="%(destemail)s", protocol="%(protocol)s]
+
+# ban & send an e-mail with whois report and relevant log lines
+# to the destemail.
+action_mwl = %(banaction)s[name=%(__name__)s, port="%(port)s", protocol="%(protocol)s]
+               %(mta)s-whois-lines[name=%(__name__)s, dest="%(destemail)s", logpath=%(logpath)s]
+ 
+# Choose default action.  To change, just override value of 'action' with the
+# interpolation to the chosen action shortcut (e.g.  action_mw, action_mwl, etc) in jail.local
+# globally (section [DEFAULT]) or per specific section 
+action = %(action_mwl)s
+
+[ssh]
+
+enabled 	= true
+port		= 9022
+filter 		= sshd
+logpath		= /var/log/auth.log
+maxretry	= 3
+findtime	= 600
+usedns		= warn
