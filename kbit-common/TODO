@@ -1,0 +1,21 @@
+TODO:
+
+sudo yum install http://www.percona.com/downloads/percona-release/redhat/0.1-3/percona-release-0.1-3.noarch.rpm
+sudo yum install http://www.percona.com/downloads/Percona-Server-5.1/Percona-Server-5.1.73-rel14.12/RPM/rhel6/x86_64/Percona-Server-shared-compat-51-5.1.73-rel14.12.624.rhel6.x86_64.rpm
+sudo rpm -Uvh http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-5.noarch.rpm
+sudo yum install nrpe nsca-client nagios-plugins-disk nagios-plugins-load
+sudo yum install vim-enhanced
+sudo vim /etc/nagios/nrpe.cfg 
+sudo service nrpe restart
+cat /etc/nrpe.d/nrpe-checks.cfg 
+cat /etc/cron.d/percona_crons 
+sudo /usr/local/rdba/bin/check_controller
+sudo yum install pciutils smartmontools
+sudo /usr/local/rdba/bin/check_controller
+
+
+
+
+Old Certificates
+SSL v3.0 enabled
+HTTP Methods allowed everyone (Should be just GET-POST)

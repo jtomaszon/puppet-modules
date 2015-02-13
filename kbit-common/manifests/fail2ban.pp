@@ -1,3 +1,5 @@
+# == Class: fail2ban
+#
 class kbit-common::fail2ban {
 
   package { 'fail2ban':
