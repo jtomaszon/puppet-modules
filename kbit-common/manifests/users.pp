@@ -49,4 +49,19 @@ class kbit-common::users {
     require => File['ssh'],
   }
 
+  file { 'sudoers':
+    path => '/etc/sudoers',
+    ensure => present,
+    owner => 'root',
+    group => 'root',
+    mode => 0400,
+  }
+  
+  file_line { 'Changing default sudoers privileges':
+    path => '/etc/sudoers',  
+    line => '%sudo   ALL=(ALL:ALL) NOPASSWD: ALL',
+    match => "^%sudo   ALL=(ALL:ALL) ALL$",
+    require => File['sudoers'],
+  }
+
 }

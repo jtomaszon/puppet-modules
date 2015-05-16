@@ -77,45 +77,8 @@ class kbit-common::percona {
     ensure  => file,
     owner   => 'root',
     group   => 'root',
-    mode    => 644,
+    mode    => 0400,
     subscribe => Service['mysql'],
   }
-
-  class mysql-init-setup {
-    exec {'create-percona-user':
-      path    => ['/bin', '/usr/bin'],
-      command => "mysql -e \"create user percona@localhost identified by '$percona_mysql_password';\" ; \
-                  mysql -e 'grant all on *.* to percona@localhost with grant option;'",
-      unless  => 'mysqladmin ping',
-      require => Service['mysql'],
-    }
-
-    file {'/root/.my.cnf': 
-      content => "[client]\nuser=percona\npassword=$percona_mysql_password\n",
-      ensure  => file,
-      owner   => 'root',
-      group   => 'root',
-      mode    => 400,
-      before  => Exec['create-percona-user'],
-    }
-
-    exec {'remove-mysql-default-users':
-      path    => ['/bin', '/usr/bin'],
-      command => 'mysql -e "delete from mysql.user where user in (\"\", \"root\");" ; \
-                  mysql -e "delete from mysql.db where user=\"\";" ; \
-                  mysql -e "flush privileges"',
-      onlyif  => 'mysql -e "select * from mysql.user where user in (\"\", \"root\")" | grep Host',
-      require => Exec['create-percona-user'], 
-    }
-
-    exec {'create-percona-db':
-      path    => ['/bin', '/usr/bin'],
-      command => 'mysqladmin create percona',
-      unless  => 'mysql percona',
-      require => Exec['create-percona-user'], 
-    }
-  }
-
-  include mysql-init-setup
 
 }
