@@ -54,7 +54,6 @@ class kbit-common::percona {
       }
       package { [$perconaPackages]:
         ensure        => latest,
-        allow_virtual => false,
         require       => Exec['percona-repo'],
       }
     }
