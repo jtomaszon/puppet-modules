@@ -47,10 +47,10 @@ class kbit-common::percona {
       }
     }
     'RedHat': {
-      exec { "rpm -Uvh http://www.percona.com/redir/downloads/percona-release/redhat/latest/percona-release-0.1-3.noarch.rpm":
+      exec { "rpm -Uvh /vagrant/percona-release-0.1-3.noarch.rpm":
         alias  => 'percona-repo',
         path   => ["/bin", "/usr/bin", "/usr/sbin"],
-        unless => 'file /etc/yum.repo.d/percona-release.repo',
+        unless => '[ ! -f /etc/yum.repo.d/percona-release.repo ]',
       }
       package { [$perconaPackages]:
         ensure        => latest,
@@ -77,7 +77,7 @@ class kbit-common::percona {
     ensure  => file,
     owner   => 'root',
     group   => 'root',
-    mode    => 0400,
+    mode    => 0644,
     subscribe => Service['mysql'],
   }
 
