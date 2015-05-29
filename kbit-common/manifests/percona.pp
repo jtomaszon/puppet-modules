@@ -50,7 +50,7 @@ class kbit-common::percona {
       exec { "rpm -Uvh /vagrant/percona-release-0.1-3.noarch.rpm":
         alias  => 'percona-repo',
         path   => ["/bin", "/usr/bin", "/usr/sbin"],
-        unless => '[ ! -f /etc/yum.repo.d/percona-release.repo ]',
+        unless => 'ls /etc/yum.repo.d/percona-release.repo',
       }
       package { [$perconaPackages]:
         ensure        => latest,
