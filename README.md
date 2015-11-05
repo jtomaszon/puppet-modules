@@ -1,6 +1,8 @@
 # puppet-modules
 
-Install git
+- Install git
+```
 cd /etc/puppet/modules
 git clone <repo>
 puppet apply -e 'include kbit-common'
+```
